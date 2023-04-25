@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveController : MonoBehaviour
+public class MoveController : MonoBehaviour, IController
 {
     //public SpriteRenderer SpriteRenderer;
     public Rigidbody Rig;
@@ -11,7 +11,7 @@ public class MoveController : MonoBehaviour
     //public Animator AnimatorFlip;
 
 
-    public float MoveSpeed;
+    public float MoveSpeed = 0;
     //public float JumpForce;
     //public float GroundRayLength;
     //public LayerMask WhatIsGround;
@@ -21,10 +21,9 @@ public class MoveController : MonoBehaviour
     private Vector2 _moveInput;
     //private bool moveingBackords;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Init() 
     {
-        
+        MoveSpeed = 5;
     }
 
     // Update is called once per frame

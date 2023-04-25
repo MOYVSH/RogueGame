@@ -1,0 +1,52 @@
+﻿using System;
+
+namespace UnityTimer
+{
+    public static class UnityTimerMgr
+    {
+        public const long TICK_COUNT_PER_MS = 10000;
+        public const long SECOND_TICK_COUNT = 1000 * TICK_COUNT_PER_MS;
+        public const long MIN_TICK_COUNT = 60 * SECOND_TICK_COUNT;
+        public const long FRAME_TICK_COUNT = 15 * TICK_COUNT_PER_MS;
+
+        public const long FRAME2_TICK_COUNT = 20 * TICK_COUNT_PER_MS;
+        public const long FRAME3_TICK_COUNT = 30 * TICK_COUNT_PER_MS;
+
+        public static CountTickClock CreateFrameClock (Action<long> onUpdate , bool autoStart = true)
+        {
+            return new CountTickClock (FRAME_TICK_COUNT , onUpdate , autoStart);
+        }
+        public static CountTickClock CreateFrame2Clock(Action<long> onUpdate, bool autoStart = true)
+        {
+            return new CountTickClock(FRAME2_TICK_COUNT, onUpdate, autoStart);
+        }
+        public static CountTickClock CreateFrame3Clock(Action<long> onUpdate, bool autoStart = true)
+        {
+            return new CountTickClock(FRAME3_TICK_COUNT, onUpdate, autoStart);
+        }
+        public static CountTickClock CreateFrameClock (bool autoStart = true)
+        {
+            return new CountTickClock (FRAME_TICK_COUNT , autoStart);
+        }
+
+        public static CountTickClock CreateSecondClock (Action<long> onUpdate , bool autoStart = true)
+        {
+            return new CountTickClock (SECOND_TICK_COUNT , onUpdate , autoStart);
+        }
+
+        public static CountTickClock CreateSecondClock (bool autoStart = true)
+        {
+            return new CountTickClock (SECOND_TICK_COUNT , autoStart);
+        }
+
+        public static CountTickClock CreateMinuteClock (Action<long> onUpdate , bool autoStart = true)
+        {
+            return new CountTickClock (MIN_TICK_COUNT , onUpdate , autoStart);
+        }
+
+        public static CountTickClock CreateMinuteClock (bool autoStart = true)
+        {
+            return new CountTickClock (MIN_TICK_COUNT , autoStart);
+        }
+    }
+}
