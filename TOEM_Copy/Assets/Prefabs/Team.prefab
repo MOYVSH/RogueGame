@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7753232003817932597}
   - component: {fileID: 8420327452222467909}
   - component: {fileID: 4040460408429074146}
+  - component: {fileID: 3239051415977941986}
   m_Layer: 0
   m_Name: Team
   m_TagString: Player
@@ -137,6 +138,8 @@ MonoBehaviour:
   - {fileID: 666716840065633810}
   - {fileID: 6239389995586030163}
   - {fileID: 3357161512514563183}
+  _gameManager: {fileID: 0}
+  _moveController: {fileID: 0}
 --- !u!114 &4040460408429074146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +154,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rig: {fileID: 7753232003817932597}
   MoveSpeed: 0
+--- !u!114 &3239051415977941986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461140776711581029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a5cc07e2ab77e4a9c0711664bcc26a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mask:
+    serializedVersion: 2
+    m_Bits: 128
+  groupID: 1
+  keepDis: 1.6
+  keepWeight: 1
+  targetCloseDistance: 2
+  stopDis: 1
+  ShowDebug: 0
 --- !u!1 &2337685967965129108
 GameObject:
   m_ObjectHideFlags: 0

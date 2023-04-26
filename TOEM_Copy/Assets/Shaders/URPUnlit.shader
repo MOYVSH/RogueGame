@@ -1,6 +1,6 @@
 //SRPºÊ»›
 
-Shader "Hidden/URPUnlitTemplate"
+Shader "Hidden/URPUnlit"
 {
 	Properties
 	{

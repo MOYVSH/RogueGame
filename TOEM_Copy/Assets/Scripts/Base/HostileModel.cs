@@ -26,6 +26,6 @@ public class HostileModel : IModel
     public void Init(int ID)
     {
         this.ID = ID;
-        BaseSpeed = 1f;
+        BaseSpeed = UnityEngine.Random.Range(3f, 5f);
     }
 }

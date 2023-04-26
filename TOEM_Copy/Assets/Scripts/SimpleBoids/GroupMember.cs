@@ -1,8 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hostile : MonoBehaviour
+/// <summary>
+/// 挂载到组中的每个成员身上
+/// </summary>
+public class GroupMember : MonoBehaviour
 {
     [SerializeField]
     private GroupController myGroup;//当前成员的GroupController组件
@@ -20,33 +22,15 @@ public class Hostile : MonoBehaviour
     [Header("旋转速度")]
     public float rotateSpeed;
 
-    Hostile otherMember;
+    GroupMember otherMember;
 
-    [HideInInspector]
-    public bool NeedDevastate = false;
-
-    HostileModel data;
-    private bool _inited = false;
-    private GameManager Contex;
-
-    public void Init(GameManager contex,int ID)
+    private void Start()
     {
-        this.Contex = contex;
-        data = new HostileModel();
-        data.Init(ID);
-        NeedDevastate = false;
-        _inited = true;
-
-        moveSpeed = data.BaseSpeed;
         myGroup = GroupController.GetGroup(groupId);
     }
 
-    public void update()
+    void Update()
     {
-        if (!_inited)  return;
-        if (NeedDevastate) return;
-
-
         Vector3 dis = myGroup.transform.position - transform.position;
         Vector3 dir = dis.normalized;
 
@@ -71,26 +55,27 @@ public class Hostile : MonoBehaviour
         //————————————————————移动
         transform.right = -dir;
         Move(dir, speed);
-
-
-
-        //if (Vector3.Distance(transform.position, GameManager.Instance.TeamManager.transform.position) < 0.01f)
-        //{
-        //    //Vector3 dir = Vector3.Normalize(GameManager.Instance.TeamManager.transform.position - transform.position);
-        //    //transform.position += dir * Time.deltaTime * data.BaseSpeed;
-        //    //NeedDevastate = true;
-        //    return;
-        //}
-        //else
-        //{
-        //    // Vector3.Lerp(transform.position, GameManager.Instance.TeamManager.transform.position, Time.deltaTime * data.BaseSpeed);
-        //    transform.position += (GameManager.Instance.TeamManager.transform.position - transform.position).normalized * Time.deltaTime * data.BaseSpeed;
-        //}
     }
 
+    private void OnDrawGizmos()
+    {        
+        //绘制球形线框范围 和单位之间的连线
+        Gizmos.color = Color.red;
+        if (myGroup && myGroup.ShowDebug)
+        {
+            if (myGroup)
+            {
+                Gizmos.DrawWireSphere(transform.position, myGroup.keepDis);
+            }
+            if (otherMember) 
+            {
+                Debug.DrawLine(transform.position, otherMember.transform.position, Color.yellow);
+            }
+        }
 
+    }
 
-     /// <summary>
+    /// <summary>
     /// 得到周围成员的信息
     /// </summary>
     /// <returns></returns>
@@ -102,7 +87,7 @@ public class Hostile : MonoBehaviour
         Vector3 v2 = Vector3.zero;
         for (int i = 0; i < c.Length; i++)
         {
-            otherMember = c[i].GetComponent<Hostile>();
+            otherMember = c[i].GetComponent<GroupMember>();
             dis = transform.position - otherMember.transform.position;//距离
             v1 += dis.normalized * (1 - dis.magnitude / myGroup.keepDis);//查看与周围成员的距离
             v2 += otherMember.myMovement;//查看周围成员移动方向
@@ -119,19 +104,31 @@ public class Hostile : MonoBehaviour
     private void Move(Vector3 _dir, float _speed)
     {
         Vector3 finialDirection = _dir.normalized;
-        float finialSpeed = _speed;
+        float finialSpeed = _speed, finialRotate = 0;
+        float rotateDir = Vector3.Dot(finialDirection, transform.right);
         float forwardDir = Vector3.Dot(finialDirection, transform.forward);
 
-
+        if (forwardDir < 0)
+        {
+            rotateDir = Mathf.Sign(rotateDir);
+        }
         if (forwardDir < -0.2f)
         {
             finialSpeed = Mathf.Lerp(currentSpeed, -_speed * 8, 4 * Time.deltaTime);
         }
 
+        //——————————防抖
+        if (forwardDir < 0.98f)
+        {
+            finialRotate = Mathf.Clamp(rotateDir * 180, -rotateSpeed, rotateSpeed);
+        }
+
         finialSpeed *= Mathf.Clamp01(_dir.magnitude);
+        finialSpeed *= Mathf.Clamp01(1 - Mathf.Abs(rotateDir) * 0.8f);
 
         transform.Translate(Vector3.left * finialSpeed * Time.deltaTime);
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        //transform.Rotate(Vector3.forward * finialRotate * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0, 0,0);
 
         currentSpeed = finialSpeed;
         myMovement = _dir * finialSpeed;

@@ -15,7 +15,8 @@ public class Slot : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Hostile")
+        
+        if (other.CompareTag("Hostile"))// 不直接.tag性能要好因为.tag是一个属性要经过get
         {
             if (_teamManager._gameManager.BuffManager.ContainBuff(BuffType.InvincibleModifier, _teamManager.data.ID))
             {

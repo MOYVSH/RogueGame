@@ -94,7 +94,12 @@ public class GameManager : UnitySingleton<GameManager>, IManager
 
         BuffManager.Init();
 
-        GenerateHostile(new Vector3(-15, 0, 0), 2);
+
+        for (int i = 0; i < 20; i++)
+        {
+            GenerateHostile(new Vector3(UnityEngine.Random.Range(-15, 15), 0, UnityEngine.Random.Range(-15, 15)), 2 + i);
+        }
+        //GenerateHostile(new Vector3(-15, 0, 0), 2);
         //GenerateHostile(new Vector3(15, 0, 0),3);
         //GenerateHostile(new Vector3(0, 0, -15),4); 
         //GenerateHostile(new Vector3(-15, 0, -15),5);
@@ -105,7 +110,7 @@ public class GameManager : UnitySingleton<GameManager>, IManager
         //BuffManager.AddBuff(BuffType.InvincibleModifier, 4, 4);
         //BuffManager.AddBuff(BuffType.InvincibleModifier, 5, 5);
 
-        Job.MakeImmediately(cb(), this);
+        //Job.MakeImmediately(cb(), this);
     }
 
     IEnumerator cb()
