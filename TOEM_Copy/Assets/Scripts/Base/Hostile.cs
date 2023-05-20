@@ -71,21 +71,6 @@ public class Hostile : MonoBehaviour
         //！！！！！！！！！！！！！！！！！！！！卞強
         transform.right = -dir;
         Move(dir, speed);
-
-
-
-        //if (Vector3.Distance(transform.position, GameManager.Instance.TeamManager.transform.position) < 0.01f)
-        //{
-        //    //Vector3 dir = Vector3.Normalize(GameManager.Instance.TeamManager.transform.position - transform.position);
-        //    //transform.position += dir * Time.deltaTime * data.BaseSpeed;
-        //    //NeedDevastate = true;
-        //    return;
-        //}
-        //else
-        //{
-        //    // Vector3.Lerp(transform.position, GameManager.Instance.TeamManager.transform.position, Time.deltaTime * data.BaseSpeed);
-        //    transform.position += (GameManager.Instance.TeamManager.transform.position - transform.position).normalized * Time.deltaTime * data.BaseSpeed;
-        //}
     }
 
 

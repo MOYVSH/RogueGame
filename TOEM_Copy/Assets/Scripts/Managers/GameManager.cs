@@ -65,6 +65,7 @@ public class GameManager : UnitySingleton<GameManager>, IManager
         }
     }
 
+    public List<Hostile> Hostiles => _hostiles;
 
     List<Hostile> _hostiles = new List<Hostile>();
     List<Bullet> _bullets = new List<Bullet>();
@@ -95,10 +96,10 @@ public class GameManager : UnitySingleton<GameManager>, IManager
         BuffManager.Init();
 
 
-        for (int i = 0; i < 20; i++)
-        {
-            GenerateHostile(new Vector3(UnityEngine.Random.Range(-15, 15), 0, UnityEngine.Random.Range(-15, 15)), 2 + i);
-        }
+        //for (int i = 0; i < 20; i++)
+        //{
+        //    GenerateHostile(new Vector3(UnityEngine.Random.Range(-15, 15), 0, UnityEngine.Random.Range(-15, 15)), 2 + i);
+        //}
         //GenerateHostile(new Vector3(-15, 0, 0), 2);
         //GenerateHostile(new Vector3(15, 0, 0),3);
         //GenerateHostile(new Vector3(0, 0, -15),4); 

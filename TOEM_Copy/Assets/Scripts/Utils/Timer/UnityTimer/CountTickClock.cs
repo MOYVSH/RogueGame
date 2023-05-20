@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnityTimer
 {
-    public class CountTickClock
+    public class CountTickClock : IDisposable
     {
         private long _totalTick;
         private long _utilTime;
@@ -12,7 +12,7 @@ namespace UnityTimer
         private long _totalUpdateCount;
 
         private Action<long> _onUpdate;
-        private readonly TickClock _tickClock;
+        private TickClock _tickClock;
 
         public CountTickClock (long tickCount , bool autoStart = false)
         {
@@ -76,6 +76,12 @@ namespace UnityTimer
             }
             _onUpdate += onUpdate;
             return promise;
+        }
+
+        public void Dispose()
+        {
+            _onUpdate = null;
+            _tickClock = null;
         }
     }
 }
