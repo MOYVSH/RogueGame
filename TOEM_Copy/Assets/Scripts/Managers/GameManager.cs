@@ -9,6 +9,9 @@ public class GameManager : UnitySingleton<GameManager>, IManager
 {
     public GameObject TeamPrefab;
 
+    public int Count;
+
+
     //Managers
     private TeamManager _teamManager;
     public TeamManager TeamManager
@@ -72,7 +75,8 @@ public class GameManager : UnitySingleton<GameManager>, IManager
 
     private void Awake()
     {
-        Init();
+        Count = 0;
+        //Init();
     }
 
     public void Init()
@@ -184,24 +188,24 @@ public class GameManager : UnitySingleton<GameManager>, IManager
     }
 
     // 当前场景的GameLoop
-    public void FixedUpdate()
-    {
-        for (int i = 0; i < _hostiles.Count; i++)
-        {
-            _hostiles[i].update();
-            if (_hostiles[i].NeedDevastate)
-            {
-                DevastateHostile(_hostiles[i]);
-            }
-        }
+    //public void FixedUpdate()
+    //{
+    //    for (int i = 0; i < _hostiles.Count; i++)
+    //    {
+    //        _hostiles[i].update();
+    //        if (_hostiles[i].NeedDevastate)
+    //        {
+    //            DevastateHostile(_hostiles[i]);
+    //        }
+    //    }
 
-        for (int i = 0; i < _bullets.Count; i++)
-        {
-            _bullets[i].update();
-            if (_bullets[i].NeedDevastate)
-            {
-                DevastateBullet(_bullets[i]);
-            }
-        }
-    }
+    //    for (int i = 0; i < _bullets.Count; i++)
+    //    {
+    //        _bullets[i].update();
+    //        if (_bullets[i].NeedDevastate)
+    //        {
+    //            DevastateBullet(_bullets[i]);
+    //        }
+    //    }
+    //}
 }

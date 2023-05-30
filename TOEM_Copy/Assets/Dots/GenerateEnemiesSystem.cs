@@ -1,17 +1,9 @@
 using Unity.Burst;
 using Unity.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
-using Unity.Jobs;
 using Unity.Mathematics;
-using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.Profiling;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.EventSystems.EventTrigger;
-using Random = Unity.Mathematics.Random;
 
 [RequireMatchingQueriesForUpdate]
 [BurstCompile]
@@ -20,23 +12,32 @@ public partial struct GenerateEnemiesSystem : ISystem
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
+        state.RequireForUpdate<DirectoryManaged>();
         state.RequireForUpdate<GenerateEnemiesData>();
     }
 
-    [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         //此系统所在的世界中未被管理的部分。
         var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
         var ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged);
 
+        DirectoryManaged directory = SystemAPI.ManagedAPI.GetSingleton<DirectoryManaged>();
+
+        if (directory._GameManager.Count >= 500)
+        {
+            return;
+        }
+
         var job = new GenerateHostile
         {
-            LocalTransformLookup = SystemAPI.GetComponentLookup<LocalTransform>(true),
-            ECB = ecb
+            LocalTransformLookup =
+                SystemAPI.GetComponentLookup<LocalTransform>(true),
+            ECB = ecb,
         };
 
         job.Schedule();
+        directory._GameManager.Count++;
     }
 
     private LocalToWorld RandomPosition(int index)
@@ -59,16 +60,14 @@ public partial struct GenerateEnemiesSystem : ISystem
 }
 
 
-[BurstCompile]
 public partial struct GenerateHostile : IJobEntity
 {
     [ReadOnly] public ComponentLookup<LocalTransform> LocalTransformLookup;
     public EntityCommandBuffer ECB;
 
     public void Execute(in GenerateEnemiesAspect aspect)
-    {
+    {  
         var instance = ECB.Instantiate(aspect.HostilePrefab);
-
         ECB.SetComponent(instance, new LocalTransform
         {
             Position = aspect.Point1,

@@ -6,7 +6,6 @@ using UnityEngine;
 public class GenerateEnemiesAuthoring : MonoBehaviour
 {
     public GameObject HostilePrefab;
-    public int HostileCount;
 }
 
 public class GenerateEnemiesBaker : Baker<GenerateEnemiesAuthoring>
@@ -17,13 +16,11 @@ public class GenerateEnemiesBaker : Baker<GenerateEnemiesAuthoring>
         AddComponent(entity, new GenerateEnemiesData
         {
             HostilePrefab = GetEntity(authoring.HostilePrefab, TransformUsageFlags.Dynamic),
-            HostileCount = authoring.HostileCount
-        });
+        }); 
     }
 }
 
 public struct GenerateEnemiesData : IComponentData
 {
     public Entity HostilePrefab;
-    public int HostileCount;
 }
