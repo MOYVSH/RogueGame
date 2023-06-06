@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.lennethproduction.spatialhashing": {
+      "version": "https://github.com/Sylmerria/Spatial-Hashing.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.entities": "1.0.8"
+      },
+      "hash": "28dc2c7d05cbecbe30bd36a305f1d59fdee9d8fd"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.2",
       "depth": 1,
@@ -69,25 +78,24 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.collections": {
-      "version": "2.1.0-pre.18",
-      "depth": 1,
+      "version": "2.1.4",
+      "depth": 2,
       "source": "registry",
       "dependencies": {
-        "com.unity.burst": "1.8.3",
+        "com.unity.burst": "1.8.4",
         "com.unity.modules.unityanalytics": "1.0.0",
-        "com.unity.nuget.mono-cecil": "1.11.4",
-        "com.unity.test-framework": "1.3.2"
+        "com.unity.nuget.mono-cecil": "1.11.4"
       },
       "url": "https://packages.unity.cn"
     },
     "com.unity.entities": {
-      "version": "1.0.0-pre.65",
-      "depth": 0,
+      "version": "1.0.8",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.burst": "1.8.3",
-        "com.unity.serialization": "3.0.0-pre.1",
-        "com.unity.collections": "2.1.0-pre.18",
+        "com.unity.burst": "1.8.4",
+        "com.unity.serialization": "3.1.1",
+        "com.unity.collections": "2.1.4",
         "com.unity.mathematics": "1.2.6",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.audio": "1.0.0",
@@ -199,13 +207,12 @@
       "url": "https://packages.unity.cn"
     },
     "com.unity.serialization": {
-      "version": "3.0.0-pre.1",
-      "depth": 1,
+      "version": "3.1.1",
+      "depth": 2,
       "source": "registry",
       "dependencies": {
-        "com.unity.collections": "2.1.0-pre.2",
-        "com.unity.burst": "1.7.2",
-        "com.unity.test-framework.performance": "2.8.0-preview"
+        "com.unity.collections": "2.1.4",
+        "com.unity.burst": "1.7.2"
       },
       "url": "https://packages.unity.cn"
     },
@@ -225,16 +232,6 @@
       "dependencies": {
         "com.unity.ext.nunit": "2.0.3",
         "com.unity.modules.imgui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.cn"
-    },
-    "com.unity.test-framework.performance": {
-      "version": "2.8.0-preview",
-      "depth": 2,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.test-framework": "1.1.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.cn"

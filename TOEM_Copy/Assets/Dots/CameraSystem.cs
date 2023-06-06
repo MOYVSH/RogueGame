@@ -1,3 +1,4 @@
+using System.Linq;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -8,6 +9,7 @@ using UnityEngine;
 // This system should run after the transform system has been updated, otherwise the camera
 // will lag one frame behind the tank.
 [UpdateInGroup(typeof(LateSimulationSystemGroup))]
+[UpdateAfter(typeof(LiftCycleSystem))]
 [BurstCompile]
 public partial struct CameraSystem : ISystem
 {
@@ -23,17 +25,14 @@ public partial struct CameraSystem : ISystem
     // Because this OnUpdate accesses managed objects, it cannot be Burst compiled.
     public void OnUpdate(ref SystemState state)
     {
-        if (target == Entity.Null)
+        var HostileQuery = SystemAPI.QueryBuilder().WithAll<HostileData>().Build();
+        var Hostiles = HostileQuery.ToEntityArray(Allocator.Temp);
+        if (Hostiles.Length == 0)
         {
-            var HostileQuery = SystemAPI.QueryBuilder().WithAll<HostileData>().Build();
-            var Hostiles = HostileQuery.ToEntityArray(Allocator.Temp);
-            if (Hostiles.Length == 0)
-            {
-                return;
-            }
-
-            target = Hostiles[0];
+            return;
         }
+
+        target = Hostiles[0];
 
         var targetTransform = SystemAPI.GetComponent<LocalToWorld>(target);
         var cameraTransform = CameraSingleton.Instance.transform;

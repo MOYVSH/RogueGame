@@ -1,7 +1,15 @@
+using HMH.ECS.SpatialHashing;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
+
+
+public class HostileAuthoring : MonoBehaviour
+{
+
+}
 
 public class HostileAuthoringBaker : Baker<HostileAuthoring>
 {
@@ -13,8 +21,5 @@ public class HostileAuthoringBaker : Baker<HostileAuthoring>
 }
 public struct HostileData : IComponentData
 {
-}
 
-public class HostileAuthoring : MonoBehaviour
-{
 }

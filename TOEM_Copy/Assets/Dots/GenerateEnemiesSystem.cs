@@ -1,7 +1,9 @@
+using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -34,6 +36,7 @@ public partial struct GenerateEnemiesSystem : ISystem
             LocalTransformLookup =
                 SystemAPI.GetComponentLookup<LocalTransform>(true),
             ECB = ecb,
+            StartTime = SystemAPI.Time.ElapsedTime
         };
 
         job.Schedule();
@@ -64,8 +67,9 @@ public partial struct GenerateHostile : IJobEntity
 {
     [ReadOnly] public ComponentLookup<LocalTransform> LocalTransformLookup;
     public EntityCommandBuffer ECB;
+    public double StartTime;
 
-    public void Execute(in GenerateEnemiesAspect aspect)
+    public void Execute(GenerateEnemiesAspect aspect)
     {  
         var instance = ECB.Instantiate(aspect.HostilePrefab);
         ECB.SetComponent(instance, new LocalTransform
@@ -73,6 +77,11 @@ public partial struct GenerateHostile : IJobEntity
             Position = aspect.Point1,
             Rotation = quaternion.identity,
             Scale = LocalTransformLookup[aspect.HostilePrefab].Scale
+        });
+        ECB.AddComponent(instance,new LiftCycleData 
+        {
+            LiftTime = 3.0f,
+            StartTime = this.StartTime,
         });
     }
 }

@@ -24,5 +24,9 @@ public partial struct FacingCameraSystem : ISystem
         {
             transform.ValueRW.Rotation = CameraSingleton.Instance.transform.rotation;
         }
+
+        foreach (var transform in
+         SystemAPI.Query<RefRW<LocalTransform>>())
+        { }
     }
 }

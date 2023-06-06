@@ -5,4 +5,5 @@ using UnityEngine;
 public class Directory : MonoBehaviour
 {   
     public GameManager _GameManager;
+    public Material[] Color;
 }
