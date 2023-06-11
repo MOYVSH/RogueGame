@@ -167,6 +167,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17a8c098c3003434c9c40862d7afa28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HostilePrefab: {fileID: 1461670282710162601, guid: 493e516ccaabc82479ee576ec843dc2e,
+  HostilePrefab: {fileID: 1461670282710162601, guid: 766674678a03c8543b6b10875325dbf9,
     type: 3}
-  HostileCount: 2
